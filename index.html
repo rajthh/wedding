@@ -32,6 +32,10 @@ repeating-conic-gradient(from 0deg at 50% 50%,rgba(224,176,76,.04) 0 10deg,trans
 #petals{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
 #petals span{position:absolute;top:-10%;animation:fall linear infinite;opacity:.8}
 @keyframes fall{to{transform:translate(var(--dx),115vh) rotate(540deg)}}
+#scrollhint{position:fixed;left:0;right:0;bottom:calc(18px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;z-index:55;pointer-events:none;transition:opacity .5s}
+#scrollhint .pill{font-family:Cinzel,Georgia,serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);padding:11px 20px;border-radius:30px;border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 6px 24px rgba(0,0,0,.4);animation:bobY 1.8s ease-in-out infinite}
+#scrollhint span{display:inline-block;margin-left:6px}
+@keyframes bobY{50%{transform:translateY(-8px)}}
 /* intro */
 #intro{position:fixed;inset:0;z-index:100;background:#1a0a05;overflow:hidden;transition:opacity 1s,visibility 1s}
 #intro.gone{opacity:0;visibility:hidden}
@@ -125,14 +129,14 @@ footer em{display:block;margin-top:16px;font-size:13px;opacity:.75;font-family:G
   </div>
   <p class="rv" style="margin-top:22px">📍 Swarna Gowri Kalyana Mantapa<br><span style="opacity:.8;font-size:14px">Kalludi, Gowribidanur – 561208</span></p>
   <a class="btn rv" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Swarna+Gowri+Kalyana+Mantapa+Kalludi+Gowribidanur">View Location</a>
-  <div class="scroll">⌄</div>
+<div id="scrollhint"><div class="pill">Scroll down <span>↓</span></div></div>
 </section>
 
 <section id="events">
   <h2 class="rv">Celebrations</h2><div class="sub rv">Join us for every moment</div>
   <div class="tl">
-    <div class="ev glass rv"><span class="ic">🌿</span><h3>Mehendi</h3><div class="d">Monday, 16 Nov 2026</div><p>Bride’s home, Idagur</p><p>Time: to be announced</p></div>
-    <div class="ev glass rv"><span class="ic">🌼</span><h3>Haldi</h3><div class="d">Wednesday, 18 Nov 2026</div><p>Swarnagowri Kalyana Mantapa</p><p>Time: to be announced</p></div>
+    <div class="ev glass rv"><span class="ic">🌿</span><h3>Mehendi</h3><div class="d">Monday, 16 Nov 2026</div><p>Bride’s home, Idagur</p><p>Time:11:00 AM onwards</p></div>
+    <div class="ev glass rv"><span class="ic">🌼</span><h3>Haldi</h3><div class="d">Wednesday, 18 Nov 2026</div><p>Swarnagowri Kalyana Mantapa</p><p>Time:10:00 AM onwards</p></div>
     <div class="ev glass rv"><span class="ic">🪔</span><h3>Reception</h3><div class="d">Wednesday, 18 Nov 2026</div><p>Swarnagowri Kalyana Mantapa</p><p>6:30 PM onwards</p></div>
     <div class="ev glass hl rv"><span class="ic">💍</span><h3>Wedding Muhurtham</h3><div class="d">Thursday, 19 Nov 2026</div><p>Swarnagowri Kalyana Mantapa</p><p>10:40 – 11:20 AM</p></div>
   </div>
@@ -173,6 +177,7 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
 function watch(){document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(i%4)*.12+'s';io.observe(el)})}
 /* progress */
 addEventListener('scroll',function(){var h=document.documentElement;$('bar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100)+'%'});
+var sh=$('scrollhint');addEventListener('scroll',function(){sh.style.opacity=window.scrollY>80?0:1});
 /* music: soft tanpura-like drone */
    var on=false,bgm=document.getElementById('bgm');
    function startMusic(){bgm.volume=.5;bgm.play();on=true;$('music').textContent='🔊';$('music').classList.add('on')}
