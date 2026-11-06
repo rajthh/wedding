@@ -116,7 +116,7 @@ footer em{display:block;margin-top:16px;font-size:13px;opacity:.75;font-family:G
 .ec b{font:400 clamp(30px,9vw,42px) 'Great Vibes',cursive}.ec small{font-size:12px;letter-spacing:.08em}
 .ef{background:linear-gradient(#8e1b2e,#6a1020);clip-path:polygon(0 38%,50% 66%,100% 38%,100% 100%,0 100%);z-index:3;border-radius:6px}
 .eflap{background:linear-gradient(#a3243a,#8a1a2d);clip-path:polygon(0 0,100% 0,50% 62%);transform-origin:50% 0;transform:perspective(800px) rotateX(0);transition:transform .8s ease .1s;z-index:4}
-.seal{position:absolute;left:50%;top:62%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;z-index:6;border:0;cursor:pointer;background:radial-gradient(circle at 35% 30%,#f6d77a,#c9962f 60%,#8a5d12);box-shadow:0 4px 12px rgba(0,0,0,.6),inset 0 0 0 3px rgba(255,255,255,.18);font:26px 'Great Vibes',cursive;color:#5a0f1c;animation:pulse 2s infinite;transition:transform .5s,opacity .5s}
+.seal{position:absolute;left:50%;top:62%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;z-index:6;border:0;cursor:pointer;background:radial-gradient(circle at 35% 30%,#f6d77a,#c9962f 60%,#8a5d12);box-shadow:0 4px 12px rgba(0,0,0,.6),inset 0 0 0 3px rgba(255,255,255,.18);font:18px/1 'Great Vibes',cursive;padding:0;white-space:nowrap;display:flex;align-items:center;justify-content:center;color:#5a0f1c;animation:pulse 2s infinite;transition:transform .5s,opacity .5s}
 .ehint{margin-top:30px;color:var(--gold);font-size:14px;letter-spacing:.1em;transition:opacity .5s}
 #env.open .eflap{transform:perspective(800px) rotateX(180deg);z-index:1}
 #env.open .ec{transform:translateY(-58%)}
@@ -143,6 +143,12 @@ footer em{display:block;margin-top:16px;font-size:13px;opacity:.75;font-family:G
 .wish p{font-size:15px}.wish small{display:block;margin-top:8px;color:var(--gold)}
 @keyframes wup{from{opacity:0;transform:translateY(60px) scale(.8)}}
 @keyframes wfloat{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-6px) rotate(var(--r,0deg))}}
+#invslot{text-align:center}
+#invslot img{width:min(92vw,460px);height:auto;border-radius:14px;border:3px solid var(--gold);box-shadow:0 0 60px rgba(245,158,11,.35)}
+.rtitle{text-align:center;color:#7a1626;line-height:1.3;opacity:0;transform:scale(.9);transition:opacity 1.6s .6s,transform 1.6s .6s}
+.rtitle b{display:block;font:400 clamp(44px,13vw,80px) 'Great Vibes',cursive}
+.rtitle span{display:block;font-size:14px;letter-spacing:.1em}
+#intro.open .rtitle{opacity:1;transform:none}
 </style>
 </head>
 <body class="lock">
@@ -240,6 +246,10 @@ footer em{display:block;margin-top:16px;font-size:13px;opacity:.75;font-family:G
   </div></div>
   <p class="hint rv">✨ Scratch the heart to reveal the countdown ✨</p>
   <p class="rv" id="cdmsg" style="text-align:center;margin-top:10px;color:var(--gold)"></p>
+</section>
+<section id="invite">
+  <h2 class="rv">Our Invitation</h2><div class="sub rv">With blessings and love</div>
+  <div id="invslot" class="rv"></div>
 </section>
 <section id="wishes">
   <h2 class="rv">Wishes for the Couple</h2><div class="sub rv">Leave a blessing</div>
@@ -366,6 +376,13 @@ $('go').onclick=function(){try{zac=zac||new (window.AudioContext||window.webkitA
  $('intro').classList.add('gone');setTimeout(function(){$('intro').style.display='none'},1100);zenv.classList.add('show')};
 $('seal').onclick=function(){if(zenv.classList.contains('open'))return;zenv.classList.add('open');
  var r=this.getBoundingClientRect();burst(r.left+r.width/2,r.top+r.height/2,80);zchime();setTimeout(zenter,3800)};
+/* move invitation image to the end section; door now reveals the names */
+var zrv=document.querySelector('.reveal'),zim=zrv.querySelector('img');
+$('invslot').appendChild(zim);
+var zrt=document.createElement('div');zrt.className='rtitle';
+zrt.innerHTML='<span>Together with their families</span><b>Swathi &amp; Ranjith</b><span>welcome you</span>';
+zrv.insertBefore(zrt,$('go'));
+$('go').textContent='Open the invitation ✉';
 })();
 </script>
 </body>
