@@ -375,15 +375,6 @@ zb.onclick=function(){zrain(46);zchime()};
 var zlast=0;
 document.addEventListener('click',function(e){if(e.target.closest('a,button,input,textarea,select,canvas,#intro,#env,.wish'))return;
  var n=Date.now();if(n-zlast<1500)return;zlast=n;zrain(14);zchime()});
-/* 2. wishes wall (saved on the guest's own device) */
-var zwall=$('wall'),zk='wishesV1';
-function zadd(n,t,anim){var c=document.createElement('div'),p=document.createElement('p'),s=document.createElement('small');
- c.className='wish glass'+(anim?' new':'');p.textContent=t;s.textContent='— '+(n||'A well-wisher');c.appendChild(p);c.appendChild(s);
- c.style.setProperty('--r',(Math.random()*4-2)+'deg');zwall.insertBefore(c,zwall.firstChild)}
-try{JSON.parse(localStorage.getItem(zk)||'[]').forEach(function(w){zadd(w.n,w.t,false)})}catch(e){}
-$('wsend').onclick=function(){var t=$('wt').value.trim().slice(0,120),n=$('wn').value.trim().slice(0,30);if(!t){$('wt').focus();return}
- zadd(n,t,true);try{var a=JSON.parse(localStorage.getItem(zk)||'[]');a.push({n:n,t:t});localStorage.setItem(zk,JSON.stringify(a.slice(-20)))}catch(e){}
- $('wt').value='';var r=$('wsend').getBoundingClientRect();burst(r.left+r.width/2,r.top,70);zrain(10)};
 /* 3. sparkle trail */
 function ztrail(x,y){for(var i=0;i<2;i++)ps.push({x:x,y:y,vx:(Math.random()-.5)*1.4,vy:Math.random()*1.2-.3,l:.8,c:C[Math.floor(Math.random()*5)],r:1+Math.random()*2.4})}
 addEventListener('pointermove',function(e){if(e.pointerType==='mouse')ztrail(e.clientX,e.clientY)});
@@ -407,6 +398,9 @@ addEventListener('scroll',zwalk);addEventListener('resize',zwalk);zwalk();
 function zenter(){document.body.classList.remove('lock');$('walk').style.display='block';zb.style.display='block';watch();zwalk();zgar()}
 $('go').onclick=function(){try{zac=zac||new (window.AudioContext||window.webkitAudioContext)();zac.resume()}catch(e){}
  $('intro').classList.add('gone');setTimeout(function(){$('intro').style.display='none'},1100);zenter()};
+})();
+</script>
+
 <script>
 (function(){
   try{
@@ -422,17 +416,6 @@ $('go').onclick=function(){try{zac=zac||new (window.AudioContext||window.webkitA
     if(go)go.textContent='Enter the invitation ↓';
   }catch(e){console.error(e)}
 })();
- <script>
-setTimeout(function(){
-  var i=document.getElementById('intro'),o=document.getElementById('open'),g=document.getElementById('go');
-  if(!i||!o||!g)return;
-  if(!o.onclick){o.onclick=function(){i.classList.add('open')}}
-  if(!g.onclick){g.onclick=function(){
-    i.classList.add('gone');document.body.classList.remove('lock');
-    setTimeout(function(){i.style.display='none'},1100);
-    document.querySelectorAll('.rv').forEach(function(e){e.classList.add('in')});
-  }}
-},600);
 </script>
 </body>
 </html>
