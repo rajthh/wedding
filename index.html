@@ -422,6 +422,17 @@ $('go').onclick=function(){try{zac=zac||new (window.AudioContext||window.webkitA
     if(go)go.textContent='Enter the invitation ↓';
   }catch(e){console.error(e)}
 })();
+ <script>
+setTimeout(function(){
+  var i=document.getElementById('intro'),o=document.getElementById('open'),g=document.getElementById('go');
+  if(!i||!o||!g)return;
+  if(!o.onclick){o.onclick=function(){i.classList.add('open')}}
+  if(!g.onclick){g.onclick=function(){
+    i.classList.add('gone');document.body.classList.remove('lock');
+    setTimeout(function(){i.style.display='none'},1100);
+    document.querySelectorAll('.rv').forEach(function(e){e.classList.add('in')});
+  }}
+},600);
 </script>
 </body>
 </html>
