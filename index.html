@@ -105,23 +105,6 @@ footer em{display:block;margin-top:16px;font-size:13px;opacity:.75;font-family:G
 .sp{position:absolute;top:-6vh;opacity:.9;animation:zsp linear forwards}
 @keyframes zsp{to{transform:translate(var(--dx),112vh) rotate(720deg)}}
 #zbless{display:none;position:fixed;top:calc(16px + env(safe-area-inset-top,0px));right:14px;z-index:60;padding:10px 16px;border-radius:30px;border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--gold);font:600 13px 'Playfair Display',Georgia,serif;cursor:pointer}
-/* envelope */
-#env{position:fixed;inset:0;z-index:110;background:radial-gradient(circle at 50% 40%,#3d1220,#12080a);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .8s,visibility .8s}
-#env.show{opacity:1;visibility:visible}
-#env.gone{opacity:0;visibility:hidden}
-.ew{position:relative;width:min(86vw,380px);aspect-ratio:1.5/1;margin-top:18vh}
-.eb,.ef,.eflap{position:absolute;inset:0}
-.eb{background:linear-gradient(160deg,#7a1626,#5a0f1c);border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
-.ec{position:absolute;inset:9% 6%;z-index:2;background:linear-gradient(#fff8e6,#f3e2b6);border:2px solid var(--gold);border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#7a1626;text-align:center;transition:transform 1.4s cubic-bezier(.3,.8,.3,1) .7s}
-.ec b{font:400 clamp(30px,9vw,42px) 'Great Vibes',cursive}.ec small{font-size:12px;letter-spacing:.08em}
-.ef{background:linear-gradient(#8e1b2e,#6a1020);clip-path:polygon(0 38%,50% 66%,100% 38%,100% 100%,0 100%);z-index:3;border-radius:6px}
-.eflap{background:linear-gradient(#a3243a,#8a1a2d);clip-path:polygon(0 0,100% 0,50% 62%);transform-origin:50% 0;transform:perspective(800px) rotateX(0);transition:transform .8s ease .1s;z-index:4}
-.seal{position:absolute;left:50%;top:62%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;z-index:6;border:0;cursor:pointer;background:radial-gradient(circle at 35% 30%,#f6d77a,#c9962f 60%,#8a5d12);box-shadow:0 4px 12px rgba(0,0,0,.6),inset 0 0 0 3px rgba(255,255,255,.18);font:18px/1 'Great Vibes',cursive;padding:0;white-space:nowrap;display:flex;align-items:center;justify-content:center;color:#5a0f1c;animation:pulse 2s infinite;transition:transform .5s,opacity .5s}
-.ehint{margin-top:30px;color:var(--gold);font-size:14px;letter-spacing:.1em;transition:opacity .5s}
-#env.open .eflap{transform:perspective(800px) rotateX(180deg);z-index:1}
-#env.open .ec{transform:translateY(-58%)}
-#env.open .seal{transform:scale(1.7);opacity:0;pointer-events:none}
-#env.open .ehint{opacity:0}
 /* garland */
 #garl{position:relative;z-index:2;max-width:640px;margin:-20px auto 0;padding:0 10px}
 /* walkers */
@@ -156,16 +139,6 @@ footer em{display:block;margin-top:16px;font-size:13px;opacity:.75;font-family:G
 <button id="music" aria-label="Toggle music">🔇</button>
 <div id="petals"></div>
 <canvas id="fx"></canvas>
-<div id="env">
-  <div class="ew">
-    <div class="eb"></div>
-    <div class="ec"><small>Together with their families</small><b>Swathi &amp; Ranjith</b><small>invite you to celebrate</small></div>
-    <div class="ef"></div>
-    <div class="eflap"></div>
-    <button class="seal" id="seal" aria-label="Open the envelope">S♥R</button>
-  </div>
-  <div class="ehint">Tap the seal to open</div>
-</div>
 
 <div id="walk" style="display:none">
   <svg id="wg" class="wk" viewBox="0 0 44 90" aria-hidden="true">
@@ -368,14 +341,10 @@ function zwalk(){var d=document.documentElement,mx=d.scrollHeight-innerHeight,p=
  if(p>.985&&!zmet){zmet=true;zwh.classList.add('show');burst(vw/2,innerHeight-90,90);zrain(26);zchime()}
  if(p<.95&&zmet){zmet=false;zwh.classList.remove('show')}}
 addEventListener('scroll',zwalk);addEventListener('resize',zwalk);zwalk();
-/* 4. wax seal envelope (replaces the old "View the invitation" action) */
-var zenv=$('env');
-function zenter(){zenv.classList.add('gone');setTimeout(function(){zenv.style.display='none'},1000);document.body.classList.remove('lock');
- $('walk').style.display='block';zb.style.display='block';watch();zwalk();zgar()}
+/* enter the page from the door screen */
+function zenter(){document.body.classList.remove('lock');$('walk').style.display='block';zb.style.display='block';watch();zwalk();zgar()}
 $('go').onclick=function(){try{zac=zac||new (window.AudioContext||window.webkitAudioContext)();zac.resume()}catch(e){}
- $('intro').classList.add('gone');setTimeout(function(){$('intro').style.display='none'},1100);zenv.classList.add('show')};
-$('seal').onclick=function(){if(zenv.classList.contains('open'))return;zenv.classList.add('open');
- var r=this.getBoundingClientRect();burst(r.left+r.width/2,r.top+r.height/2,80);zchime();setTimeout(zenter,3800)};
+ $('intro').classList.add('gone');setTimeout(function(){$('intro').style.display='none'},1100);zenter()};
 /* move invitation image to the end section; door now reveals the names */
 var zrv=document.querySelector('.reveal'),zim=zrv.querySelector('img');
 $('invslot').appendChild(zim);
